@@ -74,6 +74,28 @@ app.delete("/v1/contacts/:id",async(req,res)=>{
     })
 })
 
+app.put("/v1/contacts/:id", async (req,res)=>{
+    let fetchid=req.params.id
+    let upname=req.body.firstName
+    let uplastName=req.body.lastName
+    let upemail=req.body.email
+    let upphone=req.body.phone
+    User.findOneAndUpdate({id:fetchid},{$set:{firstName:upname,lastName:uplastName,email:upemail,phone:upphone}},
+        {new:true},(err,data)=>{
+            if(err){
+                res.send("error")
+            }else{
+                if(data==null){
+                    res.send("nothing found")
+                }else{
+                    res.send(data)
+                }
+            }
+
+
+    })
+})
+
 
   
 app.listen(3002,()=>{
